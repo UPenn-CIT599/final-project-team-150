@@ -1,7 +1,14 @@
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Entry of the program
+ */
 public class Main {
+
+	/**
+	 * Inner class for preseting parameters
+	 */
 	private static class Parameter {
 		private int algorithm;
 		private String fileName;
@@ -24,6 +31,11 @@ public class Main {
 			return cutOffTime;
 		}
 	}
+
+	/**
+	 * Method for determining algorithm parameters
+	 * @return set of parameters designated by user
+	 */
 	private static Parameter start() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("<---Advanced algorithms for Travelling Salesman Problem--->");
@@ -48,31 +60,32 @@ public class Main {
 		return new Parameter(Integer.parseInt(algorithm), city, Integer.parseInt(cutOff));
 
 	}
+
+	/**
+	 * Main method
+	 * @param args arguments
+	 * @throws IOException
+	 */
     public static void main(String[] args) throws IOException {
 		Parameter start = Main.start();
 		String traceFile, solutionFile;
-        City city = FileIO.readFile("src/DATA/" + start.getFileName());
+        City city = FileInput.readFile("src/DATA/" + start.getFileName());
 		switch (start.getAlgorithm()) {
-			case 1:
-				traceFile = start.getFileName().split("\\.")[0] + "_" + "BB" + "_" + Integer.toString(start.getCutOffTime()) + ".trace";
-				solutionFile = start.getFileName().split("\\.")[0] + "_" + "BB" + "_" + Integer.toString(start.getCutOffTime()) + ".sol";
-				// BranchAndBound
+			case 1: // Branch And Bound
+				BranchAndBound bb = new BranchAndBound(city.getNum(),city);
+				bb.branchBound(start.getFileName(), start.getCutOffTime());
 				break;
-			case 2:
-				traceFile = start.getFileName().split("\\.")[0] + "_" + "FI" + "_" + Integer.toString(start.getCutOffTime()) + ".trace";
-				solutionFile = start.getFileName().split("\\.")[0] + "_" + "FI" + "_" + Integer.toString(start.getCutOffTime()) + ".sol";
-				// FarthestInsert
+			case 2: // Farthest Insert
+
 				break;
-			case 3:
-				traceFile = start.getFileName().split("\\.")[0] + "_" + "SA" + "_" + Integer.toString(start.getCutOffTime()) + ".trace";
-				solutionFile = start.getFileName().split("\\.")[0] + "_" + "SA" + "_" + Integer.toString(start.getCutOffTime()) + ".sol";
-				// Simulated Annealing
+			case 3: // Simulated Annealing
+
 				break;
-			case 4:
-				traceFile = start.getFileName().split("\\.")[0] + "_" + "LS" + "_" + Integer.toString(start.getCutOffTime()) + ".trace";
-				solutionFile = start.getFileName().split("\\.")[0] + "_" + "LS" + "_" + Integer.toString(start.getCutOffTime()) + ".sol";
-				// Iterated Local Research
+			case 4: // Iterated Local Research
+
 				break;
 		}
+		System.out.println("<---Travelling Salesman Problem Solved--->");
+		System.out.println("Program Ends!");
     }
 }

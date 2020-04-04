@@ -1,40 +1,37 @@
+/**
+ * Class for locations with index and x, y coordinates
+ */
 public class Location {
     private int number;
     private double x;
     private double y;
 
-    public Location(int x, double y, double z){
-        this.number = x;
-        this.x = y;
-        this.y = z;
-    }
-
-    public void setNumber(int a){
-        this.number = a;
-    }
-
-    public int  getNumber(){
-        return this.number;
-    }
-
-
-
-    public void setx(double x){
+    /**
+     * Constructor
+     * @param num index of the location
+     * @param x coordinate
+     * @param y coordinate
+     */
+    public Location(int num, double x, double y){
+        this.number = num;
         this.x = x;
-    }
-
-    public double getx(){
-        return this.x;
-    }
-
-    public void sety(double y){
         this.y = y;
     }
 
-    public double gety(){
-        return this.y;
+    /**
+     * Getter
+     * @return x coordinate
+     */
+    public double getX() {
+        return this.x;
     }
 
-
+    /**
+     * Getter
+     * @return y coordinate
+     */
+    public double getY() {
+        return this.y;
+    }
 
 }
