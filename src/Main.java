@@ -67,25 +67,25 @@ public class Main {
 	 * @throws IOException
 	 */
     public static void main(String[] args) throws IOException {
-		Parameter start = Main.start();
-		String traceFile, solutionFile;
-        City city = FileInput.readFile("src/DATA/" + start.getFileName());
-		switch (start.getAlgorithm()) {
+		Parameter info = Main.start();
+        City city = FileInput.readFile("src/DATA/" + info.getFileName());
+		switch (info.getAlgorithm()) {
 			case 1: // Branch And Bound
-				BranchAndBound bb = new BranchAndBound(city.getNum(),city);
-				bb.branchBound(start.getFileName(), start.getCutOffTime());
+				BranchAndBound bb = new BranchAndBound(city);
+				bb.programStarts(info.getFileName(), info.getCutOffTime());
 				break;
 			case 2: // Farthest Insert
-
+				FarthestInsert fi = new FarthestInsert(city);
+				fi.programStarts(info.getFileName(), info.getCutOffTime());
 				break;
 			case 3: // Simulated Annealing
-
+				SimulatedAnnealing sa = new SimulatedAnnealing(city);
+				sa.programStarts(info.getFileName(), info.getCutOffTime());
 				break;
 			case 4: // Iterated Local Research
-
+				Iteratedlocalsearch ils = new Iteratedlocalsearch(city);
+				ils.programStarts(info.getFileName(), info.getCutOffTime());
 				break;
 		}
-		System.out.println("<---Travelling Salesman Problem Solved--->");
-		System.out.println("Program Ends!");
     }
 }

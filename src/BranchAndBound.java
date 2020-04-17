@@ -3,7 +3,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.lang.*;
 
-public class BranchAndBound {
+public class BranchAndBound extends Algorithm{
     private int nums;
     private int[] finalPath;
     private boolean[] visited;
@@ -13,15 +13,15 @@ public class BranchAndBound {
 
     /**
      * Constructor for Branch and Bound algorithm
-     * @param n number of locations
-     * @param givenCity city to implement algorithm
+     * @param city city to implement algorithm
      */
-    public BranchAndBound(int n, City givenCity) {
-        this.nums = n;
-        this.finalPath = new int[n+1];
-        this.visited = new boolean[n];
+    public BranchAndBound(City city) {
+        super();
+        this.nums = city.getNum();
+        this.finalPath = new int[city.getNum()+1];
+        this.visited = new boolean[city.getNum()];
         this.finalCost = Double.MAX_VALUE;
-        this.city = givenCity;
+        this.city = city;
         this.output = new ArrayList<>();
     }
 
@@ -111,6 +111,7 @@ public class BranchAndBound {
                         }
                     }
                     output2.close();
+                    programEnds();
                     System.exit(0);
                 }
 
@@ -149,12 +150,13 @@ public class BranchAndBound {
     /**
      * Method for implementing the Branch and Bound algorithm on the city and outputing trace file and solution file
      * @param fileName given file name
-     * @param cut_off given cut off time
+     * @param cutOffTime given cut off time
      * @throws IOException
      */
-    public void branchBound(String fileName, int cut_off) throws IOException {
-        String traceFile = fileName.split("\\.")[0] + "_" + "BB" + "_" + Integer.toString(cut_off) + "_trace.txt";
-        String solutionFile = fileName.split("\\.")[0] + "_" + "BB" + "_" + Integer.toString(cut_off) + "_solution.txt";
+    @Override
+    public void programStarts(String fileName, int cutOffTime) throws IOException {
+        String traceFile = fileName.split("\\.")[0] + "_" + "BB" + "_" + cutOffTime + "_trace.txt";
+        String solutionFile = fileName.split("\\.")[0] + "_" + "BB" + "_" + cutOffTime + "_solution.txt";
         long start = System.currentTimeMillis();
         int[] currPath = new int[this.nums];
         double currBound = 0.0;
@@ -164,9 +166,9 @@ public class BranchAndBound {
         currBound = currBound/2;
         this.visited[0] = true;
         currPath[0] = 0;
-        recursion(currBound, 0.0, 1, currPath, start, traceFile, solutionFile, cut_off);
+        recursion(currBound, 0.0, 1, currPath, start, traceFile, solutionFile, cutOffTime);
         PrintWriter output1 = new PrintWriter(traceFile);
-        for (int i = 0; i < output.size(); i++) output1.println(output.get(i).get(0) + "," + Math.round(output.get(i).get(1)));
+        for (List<Double> doubles : output) output1.println(doubles.get(0) + "," + Math.round(doubles.get(1)));
         output1.close();
         PrintWriter output2 = new PrintWriter(solutionFile);
         int[] path = this.finalPath;
@@ -176,5 +178,6 @@ public class BranchAndBound {
             else output2.printf("%d,", path[i]);
         }
         output2.close();
+        programEnds();
     }
 }
