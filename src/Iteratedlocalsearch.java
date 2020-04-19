@@ -164,18 +164,29 @@ public class Iteratedlocalsearch extends Algorithm {
             }
         }
         PrintWriter output1 = new PrintWriter(traceFile);
+        output1.println("|------------------------------------TRACES------------------------------------|");
         for (List<Double> doubles : output) {
-            output1.println(doubles.get(0) + "," + Math.round(doubles.get(1)));
+            output1.printf("%.3f seconds, total distance = %d\n", doubles.get(0), Math.round(doubles.get(1)));
         }
         output1.close();
         PrintWriter output2 = new PrintWriter(solutionFile);
         int[] path = this.finalPath;
-        output2.println((int)this.finalCost);
+        output2.println("|------------------------------------RESULT------------------------------------|");
+        System.out.println("|------------------------------------RESULT------------------------------------|");
+        output2.println("Total distance: " + (int) this.finalCost);
+        System.out.println("Total distance: " + (int) this.finalCost);
         for (int i = path.length - 1; i >= 0; i--) {
             if (i == 0) {
-                output2.printf("%d", path[i]);
-            } else {
-                output2.printf("%d,", path[i]);
+                output2.printf("Location[%02d]", path[i]);
+                System.out.printf("Location[%02d]\n", path[i]);
+            }
+            else if (i % 5 == 0) {
+                output2.printf("Location[%02d] -> \n", path[i]);
+                System.out.printf("Location[%02d] -> \n", path[i]);
+            }
+            else {
+                output2.printf("Location[%02d] -> ", path[i]);
+                System.out.printf("Location[%02d] -> ", path[i]);
             }
         }
         output2.close();

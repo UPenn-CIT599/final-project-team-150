@@ -18,7 +18,7 @@ public class BranchAndBound extends Algorithm{
     public BranchAndBound(City city) {
         super();
         this.nums = city.getNum();
-        this.finalPath = new int[city.getNum()+1];
+        this.finalPath = new int[city.getNum()];
         this.visited = new boolean[city.getNum()];
         this.finalCost = Double.MAX_VALUE;
         this.city = city;
@@ -33,7 +33,6 @@ public class BranchAndBound extends Algorithm{
         for (int i = 0; i < this.nums; i++) {
             this.finalPath[i] = path[i];
         }
-        this.finalPath[this.nums] = path[0];
     }
 
 
@@ -83,31 +82,42 @@ public class BranchAndBound extends Algorithm{
      * @param level current level
      * @param currpath current path
      * @param start starting time
-     * @param outfile1 trace file
-     * @param outfile2 solution file
+     * @param traceFile trace file
+     * @param solutionFile solution file
      * @param cut_off cut off time
      * @throws IOException
      */
-    private void recursion(double currBound,double currCost,int level,int[] currpath,long start, String outfile1, String outfile2, int cut_off) throws IOException {
+    private void recursion(double currBound,double currCost,int level,int[] currpath,long start, String traceFile, String solutionFile, int cut_off) throws IOException {
         if (level == this.nums && this.city.getDistances()[currpath[level-1]][currpath[0]] != 0.0) {
             double tempCurrCost = currCost + this.city.getDistances()[currpath[level-1]][currpath[0]];
             if (tempCurrCost < this.finalCost) {
                 convertToFinal(currpath);
                 this.finalCost = tempCurrCost;
                 if ((double)(System.currentTimeMillis()- start) / 1000 > cut_off) {
-                    PrintWriter output1 = new PrintWriter(outfile1);
+                    PrintWriter output1 = new PrintWriter(traceFile);
+                    output1.println("|------------------------------------TRACES------------------------------------|");
                     for (int i = 0; i < output.size(); i++) {
-                        output1.println(output.get(i).get(0) + "," + Math.round(output.get(i).get(1)));
+                        output1.printf("%.3f seconds, total distance = %d\n", output.get(i).get(0), Math.round(output.get(i).get(1)));
                     }
                     output1.close();
-                    PrintWriter output2 = new PrintWriter(outfile2);
+                    PrintWriter output2 = new PrintWriter(solutionFile);
                     int[] path = this.finalPath;
-                    output2.println((int)this.finalCost);
+                    output2.println("|------------------------------------RESULT------------------------------------|");
+                    System.out.println("|------------------------------------RESULT------------------------------------|");
+                    output2.println("Total distance: " + (int) this.finalCost);
+                    System.out.println("Total distance: " + (int) this.finalCost);
                     for (int i = path.length - 1; i >= 0; i--) {
                         if (i == 0) {
-                            output2.printf("%d", path[i]);
-                        } else {
-                            output2.printf("%d,", path[i]);
+                            output2.printf("Location[%02d]", path[i]);
+                            System.out.printf("Location[%02d]\n", path[i]);
+                        }
+                        else if (i % 5 == 0) {
+                            output2.printf("Location[%02d] -> \n", path[i]);
+                            System.out.printf("Location[%02d] -> \n", path[i]);
+                        }
+                        else {
+                            output2.printf("Location[%02d] -> ", path[i]);
+                            System.out.printf("Location[%02d] -> ", path[i]);
                         }
                     }
                     output2.close();
@@ -137,7 +147,7 @@ public class BranchAndBound extends Algorithm{
                 if (currBound + currCost < this.finalCost) {
                     currpath[level] = i;
                     this.visited[i] = true;
-                    recursion(currBound, currCost, level + 1, currpath, start, outfile1, outfile2, cut_off);
+                    recursion(currBound, currCost, level + 1, currpath, start, traceFile, solutionFile, cut_off);
                 }
                 currCost -= this.city.getDistances()[currpath[level - 1]][i];
                 currBound = temp;

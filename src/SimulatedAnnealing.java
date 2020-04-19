@@ -24,7 +24,8 @@ public class SimulatedAnnealing extends Algorithm{
         int num_iterate = 0;
         double best_distance = Double.POSITIVE_INFINITY;
         Random rand = new Random(seed);
-        PrintWriter output2 = new PrintWriter(solutionFile);
+        PrintWriter output2 = new PrintWriter(traceFile);
+        output2.println("|------------------------------------TRACES------------------------------------|");
 
         // The initial total distance of path
         double distance = getDistance(distances, path);
@@ -35,7 +36,7 @@ public class SimulatedAnnealing extends Algorithm{
         long starttime = System.currentTimeMillis();
         long terminTime = starttime + (long)cutOffTime * 1000;
 
-        while( System.currentTimeMillis() < terminTime){
+        while(System.currentTimeMillis() < terminTime){
 
             // 1000 times run for constant temperature
             for(int i=0; i<1000; i++){
@@ -77,7 +78,7 @@ public class SimulatedAnnealing extends Algorithm{
                 if(distance < best_distance){
                     best_distance = distance;
                     traceList.add((long)distance);
-                    output2.println((double)(System.currentTimeMillis()-starttime)/1000 + " " + Math.round(distance));
+                    output2.printf("%.3f seconds, total distance = %d\n", (double)(System.currentTimeMillis()-starttime)/1000, Math.round(distance));
                     bestRoute = path;
                 }
             }
@@ -85,24 +86,28 @@ public class SimulatedAnnealing extends Algorithm{
             temperature *= 1.0 - coolRate;
         }
 
-        bestRoute.add(bestRoute.get(0));
-        PrintWriter output1 = new PrintWriter(traceFile);
-        output1.println(Math.round(best_distance));
-        for(Integer i : bestRoute){
-            output1.print(bestRoute.get(i) + " ");
+        PrintWriter output1 = new PrintWriter(solutionFile);
+        output1.println("|------------------------------------RESULT------------------------------------|");
+        System.out.println("|------------------------------------RESULT------------------------------------|");
+        output1.println("Total distance: " + Math.round(best_distance));
+        System.out.println("Total distance: " + Math.round(best_distance));
+        for(int i = bestRoute.size() - 1; i >= 0; i--){
+            if (i == 0) {
+                output1.printf("Location[%02d]", bestRoute.get(i));
+                System.out.printf("Location[%02d]\n", bestRoute.get(i));
+            }
+            else if (i % 5 == 0) {
+                output1.printf("Location[%02d] -> \n", bestRoute.get(i));
+                System.out.printf("Location[%02d] -> \n", bestRoute.get(i));
+            }
+            else {
+                output1.printf("Location[%02d] -> ", bestRoute.get(i));
+                System.out.printf("Location[%02d] -> ", bestRoute.get(i));
+            }
         }
 
         output1.close();
-
         output2.close();
-
-        // System.out.println("The total number of iterations is: " + num_iterate);
-        // System.out.println("The initial total distance of path is: " + init);
-        // System.out.println("The final distance is: " + distance);
-        // System.out.println("The best distance is: " + best_distance);
-
-//        AnnealResult result = new AnnealResult(path, traceList);
-//        return result;
         programEnds();
     }
 

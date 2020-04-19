@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -38,22 +39,28 @@ public class Main {
 	 */
 	private static Parameter start() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("<---Advanced algorithms for Travelling Salesman Problem--->");
-		System.out.println("1. Branch and Bound");
-		System.out.println("2. Farthest Insertion");
-		System.out.println("3. Simulated Annealing");
-		System.out.println("4. Iterated Local Search");
+		System.out.println("|------------------------------------------------------------------------------|");
+		System.out.println("|-------------Advanced algorithms for Travelling Salesman Problem--------------|");
+		System.out.println("|------------------------------------------------------------------------------|");
+		System.out.println("ALGORITHM [1] -> Branch   and    Bound");
+		System.out.println("ALGORITHM [2] -> Farthest    Insertion");
+		System.out.println("ALGORITHM [3] -> Simulated   Annealing");
+		System.out.println("ALGORITHM [4] -> Iterated Local Search");
 		System.out.print("Please select an algorithm [1 - 4]: ");
 		String algorithm = scanner.nextLine();
 		while (!algorithm.equals("1")
 				&& !algorithm.equals("2")
 				&& !algorithm.equals("3")
 				&& !algorithm.equals("4")) {
-			System.out.print("Invalid input, please select a correct number [1 - 4]: ");
+			System.out.print("Invalid input, please select a valid number [1 - 4]: ");
 			algorithm = scanner.nextLine();
 		}
 		System.out.print("Please input a city (e.g. Atlanta.tsp): ");
 		String city = scanner.nextLine();
+		while (!FileInput.getMap().containsKey(city)) {
+			System.out.print("Invalid input, please input a valid city (e.g. Atlanta.tsp): ");
+			city = scanner.nextLine();
+		}
 		System.out.print("Please input a cut-off time [1 - 600 (seconds)]: ");
 		String cutOff = scanner.nextLine();
 		scanner.close();
@@ -68,7 +75,8 @@ public class Main {
 	 */
     public static void main(String[] args) throws IOException {
 		Parameter info = Main.start();
-        City city = FileInput.readFile("src/DATA/" + info.getFileName());
+		System.out.println("PROGRAM RUNNING...");
+		City city = FileInput.readFile("src/DATA/" + info.getFileName());
 		switch (info.getAlgorithm()) {
 			case 1: // Branch And Bound
 				BranchAndBound bb = new BranchAndBound(city);

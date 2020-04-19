@@ -103,26 +103,41 @@ public class FarthestInsert extends Algorithm{
         }
 
         long endTime = System.currentTimeMillis();
-        double totalTime = ((double)endTime - (double)startTime)/1000000;
+        double totalTime = ((double)endTime - (double)startTime)/1000;
 
         //Get the farthest distance
         double distance = 0.0;
-        for(int i=0; i<path.size()-1; i++){
+        for(int i=0; i<path.size()-1; i++) {
             distance += distances[path.get(i)][path.get(i+1)];
         }
 
-        PrintWriter output1 = new PrintWriter(traceFile);
-        PrintWriter output2 = new PrintWriter(solutionFile);
+        PrintWriter output2 = new PrintWriter(traceFile);
+        PrintWriter output1 = new PrintWriter(solutionFile);
 
-        output2.print(totalTime + " ");
-        output2.println(Math.round(distance));
+        output2.println("|------------------------------------TRACES------------------------------------|");
+        output2.printf("%.3f seconds, total distance = %d\n", totalTime, Math.round(distance));
 
-        output1.println(Math.round(distance));
+        output1.println("|------------------------------------RESULT------------------------------------|");
+        System.out.println("|------------------------------------RESULT------------------------------------|");
+        output1.println("Total distance: " + Math.round(distance));
+        System.out.println("Total distance: " + Math.round(distance));
+
         //Get the route of path
-        for(int i=0; i<path.size()-1; i++){
-            output1.print(path.get(i) + " ");
+        for(int i = path.size() - 2; i >= 0; i--){
+            if (i == 0) {
+                output1.printf("Location[%02d]", path.get(i));
+                System.out.printf("Location[%02d]\n", path.get(i));
+            }
+            else if (i % 5 == 0) {
+                output1.printf("Location[%02d] -> \n", path.get(i));
+                System.out.printf("Location[%02d] -> \n", path.get(i));
+            }
+            else {
+                output1.printf("Location[%02d] -> ", path.get(i));
+                System.out.printf("Location[%02d] -> ", path.get(i));
+            }
         }
-        output1.println(path.get(0));
+//        output1.println(path.get(0));
 
         output1.close();
         output2.close();

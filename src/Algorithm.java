@@ -6,6 +6,8 @@ public abstract class Algorithm {
     public abstract void programStarts(String fileName, int cutOffTime) throws IOException;
 
     public void programEnds() {
-        System.out.println("<-----------Travelling Salesman Problem Solved------------>");
+        System.out.println("|------------------------------------------------------------------------------|");
+        System.out.println("|---------------------------------PROGRAM ENDS---------------------------------|");
+        System.out.println("|------------------------------------------------------------------------------|");
     };
 }
