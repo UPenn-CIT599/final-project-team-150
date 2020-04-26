@@ -76,7 +76,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 		Parameter info = Main.start();
 		System.out.println("PROGRAM RUNNING...");
-		City city = FileInput.readFile("src/DATA/" + info.getFileName());
+		City city = FileInput.readFile("DATA/" + info.getFileName());
 		switch (info.getAlgorithm()) {
 			case 1: // Branch And Bound
 				BranchAndBound bb = new BranchAndBound(city);
