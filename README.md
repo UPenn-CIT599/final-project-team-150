@@ -36,7 +36,7 @@ This project implemented four advanced algorithms to solve the famous NP-Problem
 
 ### 2.3 Delete
 
-- Type "make clean" in the command line to delete all the class files and the output txt files.
+- Type "make clean" in the command line to delete all the class files.
 
 ## 3 Project Structure
 
