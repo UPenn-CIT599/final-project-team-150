@@ -1,0 +1,23 @@
+Project Name:
+Advanced Algorithms for Solving Travelling Salesman Problem
+
+Project Description:
+This project implemented four advanced algorithms to solve the famous 
+NP-Problem Travelling Salesman Problem. The program prompts the user to
+select which algorithm to carry out, which city to implement the algorithm on,
+and the cut-off time of the algorithm. Then the program will implement the algorithm
+on the desginated city, and outcome a path that travels each location in the city exactly once,
+with a corresponding total distance travelled. The path, total distance travelled and calculation traces
+will be ouput to two different files in the root directory.
+
+Project Work Breakdown:
+Ruo Yu is responsible for handling files. He wrote the FileInput.java, City.java and Location.java to process
+raw data into useful information that is going to be used in program.
+
+Hezijian is responsible for designing the entry interface, implementing all the algorithms and creating unit tests, including Main.java,
+Algorithm.java, BranchAndBound.java, City.java, FarthestInsert.java, Iteratedlocalsearch.java, SimulatedAnnealing.java and ProjectTest.java.
+
+README.md and summary.txt are written by Hezijian.
+
+Project GitHub Repository:
+https://github.com/UPenn-CIT599/final-project-team-150#advanced-algorithms-for-solving-travelling-salesman-problem

@@ -1,2 +1,2 @@
 clean:
-	rm *.class *.txt
+	rm *.class
