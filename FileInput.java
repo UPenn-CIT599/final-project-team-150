@@ -63,6 +63,10 @@ public class FileInput {
         return city;
     }
 
+    /**
+     * Get the hashmap of filenames
+     * @return hashmap of the filenames
+     */
     public static HashMap<String, Boolean> getMap() {
         return map;
     }

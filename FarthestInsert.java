@@ -3,14 +3,27 @@ import java.lang.Math;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Farthest Insertion algorithm
+ */
 public class FarthestInsert extends Algorithm{
     double[][] distances;
 
+    /**
+     * Constructor for Farthest Insertion algorithm
+     * @param city city to implement algorithm
+     */
     public FarthestInsert(City city) {
         super();
         distances = city.getDistances();
     }
 
+    /**
+     * Return the farthest node
+     * @param tempRow temporary rows
+     * @param onPath whether the node is onthe path or not
+     * @return the maximum index
+     */
     public int FarthestNode(double[] tempRow, boolean[] onPath) {
 
         int maxIndex = 0;
@@ -26,11 +39,17 @@ public class FarthestInsert extends Algorithm{
         return maxIndex;
     }
 
+    /**
+     * Select a node
+     * @param path current path
+     * @param matrix distances between locations
+     * @return the selected node
+     */
     public int SelectNode(List<Integer> path, double[][] matrix) {
         int dim = matrix.length;
         boolean[] onPath = new boolean[dim];
         double max = Double.NEGATIVE_INFINITY;
-        int to=0, from=0;
+        int to = 0, from;
 
         //initialize all nodes to be not on path
         for (int i=0; i<dim; i++) {
@@ -54,10 +73,16 @@ public class FarthestInsert extends Algorithm{
         return to;
     }
 
+    /**
+     * Insert a node
+     * @param path current path
+     * @param matrix distances between locations
+     * @param k the index of the selected node
+     * @return insertion position
+     */
     public int InsertNode(List<Integer> path, double[][] matrix, int k) {
 
         double min = Double.POSITIVE_INFINITY;
-        double temp = Double.POSITIVE_INFINITY;
         int from, to;
         int insert = path.get(0);
         int dim = path.size()-1;
@@ -73,6 +98,12 @@ public class FarthestInsert extends Algorithm{
         return insert;
     }
 
+    /**
+     * Method for implementing the Farthest Insertion algorithm on the city and outputing trace file and solution file
+     * @param fileName the tsp file that is going to execute the algorithm on
+     * @param cutOffTime the cut-off time set by the user
+     * @throws IOException
+     */
     @Override
     public void programStarts(String fileName, int cutOffTime) throws IOException {
         String traceFile = fileName.split("\\.")[0] + "_" + "FI" + "_" + cutOffTime + "_trace.txt";

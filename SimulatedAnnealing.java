@@ -2,13 +2,27 @@ import java.util.*;
 import java.io.PrintWriter;
 import java.io.IOException;
 
+/**
+ * Simulated Annealing algorithm
+ */
 public class SimulatedAnnealing extends Algorithm{
     double[][] distances;
+
+    /**
+     * Constructor for Simulated Annealing algorithm
+     * @param city city to implement the algorithm on
+     */
     public SimulatedAnnealing(City city) {
         super();
         distances = city.getDistances();
     }
 
+    /**
+     * Method for implementing the Simulated Annealing algorithm on the city and outputing trace file and solution file
+     * @param fileName the tsp file that is going to implement the algorithm on
+     * @param cutOffTime the cut-off time set by the user
+     * @throws IOException
+     */
     @Override
     public void programStarts(String fileName, int cutOffTime) throws IOException{
         double temperature = 10000;
@@ -111,6 +125,12 @@ public class SimulatedAnnealing extends Algorithm{
         programEnds();
     }
 
+    /**
+     * Generate a random path
+     * @param graph distances between locations
+     * @param seed random seed
+     * @return randomly generated path
+     */
     public List<Integer> generateRandomPath(double[][] graph, long seed){
         int len = graph.length;
         List<Integer> randomPath = new ArrayList<>();
@@ -123,6 +143,13 @@ public class SimulatedAnnealing extends Algorithm{
         return randomPath;
     }
 
+    /**
+     * Probability of accepting the latest calculated distance
+     * @param distance current total distance
+     * @param newdistance latest calculated total distance
+     * @param temperature annealing temperature
+     * @return the probability
+     */
     public double acceptProb(double distance, double newdistance, double temperature){
 
         if (newdistance < distance) {
@@ -131,7 +158,12 @@ public class SimulatedAnnealing extends Algorithm{
         return Math.exp((distance - newdistance) / temperature);
     }
 
-
+    /**
+     * Calculate the total distance
+     * @param graph distances between locations
+     * @param path current path
+     * @return the total distance
+     */
     public double getDistance(double[][] graph, List<Integer> path){
         double distance = 0;
         for(int i=0; i<path.size()-1; i++){

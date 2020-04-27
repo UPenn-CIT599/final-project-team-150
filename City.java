@@ -1,5 +1,8 @@
 import java.util.*;
 
+/**
+ * Class for a city
+ */
 public class City {
     private final double RRR = 6378.388;
     private final double pi = 3.1415926;
@@ -38,14 +41,6 @@ public class City {
 
     /**
      * Getter
-     * @return list of coordinates
-     */
-    public List<Location> getCoordinate() {
-        return this.coordinates;
-    }
-
-    /**
-     * Getter
      * @return distances between locations
      */
     public double[][] getDistances() {
@@ -58,14 +53,6 @@ public class City {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * Setter
-     * @param num of locations
-     */
-    public void setNum(int num) {
-        this.locationNum = num;
     }
 
     /**

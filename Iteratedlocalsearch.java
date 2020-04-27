@@ -2,6 +2,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
+/**
+ * Iterated Local Search algorithm
+ */
 public class Iteratedlocalsearch extends Algorithm {
     private int nums;
     private int[] finalPath;
@@ -13,7 +16,11 @@ public class Iteratedlocalsearch extends Algorithm {
     private List<List<Double>> output;
 
 
-    public Iteratedlocalsearch(City city){
+    /**
+     * Constructor for the Iterated Local Search algorithm
+     * @param city the city to implement the algorithm
+     */
+    public Iteratedlocalsearch(City city) {
         super();
         this.nums = city.getNum();
         this.finalPath = new int[city.getNum()];
@@ -26,7 +33,10 @@ public class Iteratedlocalsearch extends Algorithm {
 
     }
 
-    /////generate initial random path
+    /**
+     * Randomly change positions of two locations
+     * @param path path with randomly changed positions of locations
+     */
     public void changePosition(int[] path) {
         for(int index=path.length-1; index>=0; index--) {
             swap(path,this.rand.nextInt(index+1), index);
@@ -34,6 +44,11 @@ public class Iteratedlocalsearch extends Algorithm {
     }
 
 
+    /**
+     * Generate initial random path
+     * @param graph distances between locations
+     * @return randomly generated path
+     */
     private int[] generateRandomPath(double[][] graph){
         int len = graph.length;
         int[] randomPath = new int[len];
@@ -44,7 +59,13 @@ public class Iteratedlocalsearch extends Algorithm {
         return randomPath;
     }
 
-    private  double getCost(double[][] graph, int[] path){
+    /**
+     * Get the total distance
+     * @param graph distances between locations
+     * @param path current path
+     * @return the total distance
+     */
+    private double getCost(double[][] graph, int[] path){
         double distance = 0;
         for(int i = 0; i < path.length-1; i++){
             distance += graph[path[i]][path[i+1]];
@@ -53,7 +74,9 @@ public class Iteratedlocalsearch extends Algorithm {
         return distance;
     }
 
-    /////exchange parts of current path
+    /**
+     * Exchange parts of current path
+     */
     private void addPerturtation(){
         int len = this.finalPath.length;
         int end1 = 1 + Math.abs(this.rand.nextInt()) % (len/3);
@@ -74,9 +97,13 @@ public class Iteratedlocalsearch extends Algorithm {
 
 
     }
-
-
-
+    /**
+     * Swap locations in the path
+     * @param currPath current path
+     * @param i location i
+     * @param j location j
+     * @return the updated path
+     */
     private int[] swap(int[] currPath, int i, int j){
         int temp = currPath[i];
         currPath[i] = currPath[j];
@@ -84,7 +111,15 @@ public class Iteratedlocalsearch extends Algorithm {
         return currPath;
     }
 
-    private  double localSearch(int[] path,double cost, double[][] graph, int maxImprove){
+    /**
+     * Search for optimum locally
+     * @param path current path
+     * @param cost the total distance
+     * @param graph distances between locations
+     * @param maxImprove maximum number of improvements
+     * @return final cost
+     */
+    private double localSearch(int[] path,double cost, double[][] graph, int maxImprove){
         int count = 0;
         int len = path.length;
         int[] currPath = new int[len];
@@ -114,24 +149,21 @@ public class Iteratedlocalsearch extends Algorithm {
         return temp == 0.0?cost:temp;
     }
 
+    /**
+     * Perturate current path
+     * @param graph current path
+     */
     private void perturbation(double[][] graph){
         addPerturtation();
         this.currentCost = getCost(graph,currentPath);
     }
-    private void printpath(int[] path){
-        for (int i = 0; i < this.nums; i++) {
-            System.out.println(path[i]);
-        }
-    }
 
-    public int[] getFinalPath(){
-        return this.finalPath;
-    }
-
-    public double getFinalCost(){
-        return this.finalCost;
-    }
-
+    /**
+     * Method for implementing the Iterated Local Search algorithm on the city and outputing trace file and solution file
+     * @param fileName the tsp file that is going to implement the algorithm on
+     * @param cutOffTime the cut-off time set by the user
+     * @throws IOException
+     */
     @Override
     public void programStarts(String fileName, int cutOffTime) throws IOException {
         int maxSearchTimes = 1000000000;

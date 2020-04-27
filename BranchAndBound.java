@@ -3,6 +3,9 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.lang.*;
 
+/**
+ * Branch and Bound algorithm
+ */
 public class BranchAndBound extends Algorithm{
     private int nums;
     private int[] finalPath;

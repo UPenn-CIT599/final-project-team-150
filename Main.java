@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -46,26 +45,30 @@ public class Main {
 		System.out.println("ALGORITHM [2] -> Farthest    Insertion");
 		System.out.println("ALGORITHM [3] -> Simulated   Annealing");
 		System.out.println("ALGORITHM [4] -> Iterated Local Search");
-		System.out.print("Please select an algorithm [1 - 4]: ");
-		String algorithm = scanner.nextLine();
-		while (!algorithm.equals("1")
-				&& !algorithm.equals("2")
-				&& !algorithm.equals("3")
-				&& !algorithm.equals("4")) {
-			System.out.print("Invalid input, please select a valid number [1 - 4]: ");
-			algorithm = scanner.nextLine();
-		}
-		System.out.print("Please input a city (e.g. Atlanta.tsp): ");
-		String city = scanner.nextLine();
-		while (!FileInput.getMap().containsKey(city)) {
-			System.out.print("Invalid input, please input a valid city (e.g. Atlanta.tsp): ");
-			city = scanner.nextLine();
-		}
-		System.out.print("Please input a cut-off time [1 - 600 (seconds)]: ");
-		String cutOff = scanner.nextLine();
-		scanner.close();
-		return new Parameter(Integer.parseInt(algorithm), city, Integer.parseInt(cutOff));
+		
+		String algorithm, city;
+		int cutOff;
 
+		do {
+			System.out.print("Please select an algorithm [1 - 4]: ");
+			algorithm = scanner.nextLine();
+		} while (!algorithm.equals("1")
+		&& !algorithm.equals("2")
+		&& !algorithm.equals("3")
+		&& !algorithm.equals("4"));
+
+		do {
+			System.out.print("Please input a city (e.g. Atlanta.tsp): ");
+			city = scanner.nextLine();
+		} while (!FileInput.getMap().containsKey(city));
+
+		do {
+			System.out.print("Please input a cut-off time [1 - 600 (seconds)]: ");
+			cutOff = scanner.nextInt();
+		} while (cutOff < 1 || cutOff > 600);
+
+		scanner.close();
+		return new Parameter(Integer.parseInt(algorithm), city, cutOff);
 	}
 
 	/**
